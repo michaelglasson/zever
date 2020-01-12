@@ -39,8 +39,6 @@ public class ZeverInverterToPVOutput {
 		p.load();
 		p.updateOutputsWithInverterResponse(ZeverString);
 		
-		if ()
-		
 		for (String s : p.outputs.keySet()) {
 			if (postToPVoutput(p.outputs.get(s).toCSV())) {
 				p.outputs.remove(s);
