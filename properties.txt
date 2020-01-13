@@ -2,7 +2,7 @@
 # This file should be placed in the same directory as the program's jar file.
 
 InverterURL=localhost:8500/home.cgi
-LocalCacheFileName=cache
+LocalCacheFileName=output
 PVOutput.URL=https://pvoutput.org/service/r2/addoutput.jsp
 PVOutput.SystemId=72696
 PVOutput.APIKey=a5d6b30a0b2ea5b10390dc5d0c73d52a4b0efb40
