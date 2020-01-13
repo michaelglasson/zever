@@ -1,4 +1,4 @@
-package zever;
+package org.glasson.zever;
 
 import java.io.IOException;
 

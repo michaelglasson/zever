@@ -1,4 +1,4 @@
-package zever;
+package org.glasson.zever;
 
 /*
  * This is the main point of entry into the zever program. It looks at the command line argument

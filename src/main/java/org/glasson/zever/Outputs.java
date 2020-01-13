@@ -1,4 +1,4 @@
-package zever;
+package org.glasson.zever;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -17,12 +17,9 @@ import org.apache.http.HttpVersion;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.fluent.Form;
 import org.apache.http.client.fluent.Request;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
 public class Outputs {
 	public static Map<String, Output> outputs = new TreeMap<>();
-	private static final Logger logger = LogManager.getLogger(Outputs.class);
 	private static final Properties props = new Properties();
 	private static final String inverterResponse = "1\n" + "1\n" + "EAB96173XXXXXXX\n" + "NXVWWXSRRT7XXXXXXX\n"
 			+ "M11\n" + "16B21-663R+16B21-XXXXXX\n" + "11:00 31/08/2018\n" + // will ignore this and just use current
@@ -35,7 +32,7 @@ public class Outputs {
 		try (InputStream input = new FileInputStream("properties.txt")) {
 			props.load(input);
 		} catch (IOException e) {
-			logger.fatal(e.getMessage());
+			System.out.println(e.getMessage());
 			System.exit(1);
 		}
 	}
@@ -50,12 +47,19 @@ public class Outputs {
 	 * uploaded.
 	 */
 	public void collect() {
+		if (!Files.exists(Paths.get(props.getProperty("LocalCacheFileName")))) {
+			try {
+				Files.createFile(Paths.get(props.getProperty("LocalCacheFileName")));
+			} catch (IOException e) {
+				System.out.println("Could not create output file. " + e.getMessage());
+			}
+		}
 		try (Stream<String> s = Files.lines(Paths.get(props.getProperty("LocalCacheFileName")))) {
 			s.forEach(l -> mapLine(l));
 		} catch (IOException e) {
-			logger.error("Cannot read the output file. " + e.getMessage());
+			System.out.println("Cannot read the output file. " + e.getMessage());
 		}
-		logger.info("Inverter IP: " + props.getProperty("InverterURL"));
+		System.out.println("Inverter IP: " + props.getProperty("InverterURL"));
 		updateOutputsWithInverterResponse(inverterResponse);
 	}
 
@@ -69,7 +73,7 @@ public class Outputs {
 				pw.println(outputs.get(s).toCSV());
 			}
 		} catch (FileNotFoundException e) {
-			logger.error(e.getMessage());
+			System.out.println(e.getMessage());
 		}
 	}
 
@@ -81,7 +85,7 @@ public class Outputs {
 	private void mapLine(String lineToMap) {
 		String[] s = lineToMap.split(",");
 		if (s.length != 5)
-			logger.error("Stored output in wrong format. It should have 5 parts, but has: " + s.length + "Content is: "
+			System.out.println("Stored output in wrong format. It should have 5 parts, but has: " + s.length + "Content is: "
 					+ lineToMap);
 		Output o = new Output();
 		o.date = s[0];
@@ -144,13 +148,13 @@ public class Outputs {
 					.addHeader("X-Pvoutput-SystemId", props.getProperty("PVOutput.SystemId"))
 					.bodyForm(Form.form().add("data", inverterData).build());
 			HttpResponse response = req.execute().returnResponse();
-			logger.info(response.getStatusLine().toString());
+			System.out.println(response.getStatusLine().toString());
 			if (response.getStatusLine().getStatusCode() == 200)
 				return true;
 		} catch (ClientProtocolException e) {
-			logger.error(e.getStackTrace());
+			System.out.println(e.getStackTrace());
 		} catch (IOException e) {
-			logger.error(e.getStackTrace());
+			System.out.println(e.getStackTrace());
 		}
 		return false;
 	}
