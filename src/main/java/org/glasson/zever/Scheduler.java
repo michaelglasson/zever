@@ -8,13 +8,12 @@ public class Scheduler {
 		Outputs o = new Outputs();
 		while (true) {
 			int hour = LocalTime.now().getHour();
-			if (hour < 19 && hour > 8) {
-				Thread.sleep(millisecondsToNextMinute());
-				o.collect();
-				if (LocalTime.now().getMinute() % 5 == 0)
-					o.postToPVOutput();
-				System.out.println("Should be an even minute: " + LocalTime.now());
-			}
+			if (hour > 18) // Sleep from 1800
+				Thread.sleep(14 * 60 * 60 * 1000 - 100); // Sleep until 0800
+			Thread.sleep(millisecondsToNextMinute());
+			o.collect();
+			if (LocalTime.now().getMinute() % 5 == 0)
+				o.postToPVOutput();
 		}
 	}
 

@@ -6,9 +6,9 @@ import java.time.format.DateTimeParseException;
 
 public class Output {
 	public String date;           // yyyymmdd
-	public String generated;      // watt hours generated so far today
-	public String peak;           // watts peak power generated today 
-	public String peakTime;       // hh:mm time at which peak power was generated
+	public String time;       // hh:mm time at which peak power was generated
+	public String power;           // power in watts
+	public String generated;      // energy generated so far today in watt hours
 	
 	public Output() {} // Default constructor to allow creation of blank Output.
 
@@ -30,9 +30,9 @@ public class Output {
 			System.out.println("Could not parse time and date from inverter. Using current time and date. " + e.getMessage());
 		}
 		date = d.format(DateTimeFormatter.BASIC_ISO_DATE);
-		peakTime = d.format(DateTimeFormatter.ofPattern("HH:mm"));
+		time = d.format(DateTimeFormatter.ofPattern("HH:mm"));
 		generated = String.valueOf((int)(Float.valueOf(parts[11].replaceFirst("\\.(\\d)$", ".0$1")) * 1000));
-		peak = parts[10];
+		power = parts[10];
 	}
 
 	/*
@@ -40,6 +40,6 @@ public class Output {
 	 * documentation for details.
 	 */
 	public String toCSV() {
-		return String.format("%s,%s,,%s,%s", date, generated, peak, peakTime);
+		return String.format("%s,%s,,%s,%s", date, generated, power, time);
 	}
 }

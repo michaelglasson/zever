@@ -90,8 +90,8 @@ public class Outputs {
 		Output o = new Output();
 		o.date = s[0];
 		o.generated = s[1];
-		o.peak = s[3];
-		o.peakTime = s[4];
+		o.power = s[3];
+		o.time = s[4];
 		outputs.put(o.date, o);
 	}
 
@@ -105,7 +105,7 @@ public class Outputs {
 	private void updateOutputsWithInverterResponse(String inverterResponse) {
 		Output o = new Output(inverterResponse);
 		if (outputs.containsKey(o.date)) {
-			if (Integer.parseInt(outputs.get(o.date).peak) < Integer.parseInt(o.peak)) {
+			if (Integer.parseInt(outputs.get(o.date).power) < Integer.parseInt(o.power)) {
 				outputs.put(o.date, o);
 			} else {
 				outputs.get(o.date).generated = o.generated;
