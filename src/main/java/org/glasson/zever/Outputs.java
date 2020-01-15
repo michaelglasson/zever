@@ -19,8 +19,8 @@ import org.apache.http.client.fluent.Form;
 import org.apache.http.client.fluent.Request;
 
 public class Outputs {
-	public static Map<String, Output> outputs = new TreeMap<>();
-	private static final Properties props = new Properties();
+	public  final Map<String, Output> outputs = new TreeMap<>();
+	private final Properties props = new Properties();
 
 	public Outputs() {
 		try (InputStream input = new FileInputStream("properties.txt")) {

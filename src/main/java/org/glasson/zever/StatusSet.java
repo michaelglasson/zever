@@ -5,7 +5,7 @@ import java.util.Set;
 
 public class StatusSet {
 	private static Set<Output> outputs = new LinkedHashSet<>();
-	private static String thisTimeWindow; // Multiples of 5 minutes like "09:40"
+	public static String thisTimeWindow; // Multiples of 5 minutes like "09:40"
 	
 	public static boolean timeWindowHasPassed(String toCheck) {
 		toCheck = keyForTime(toCheck);

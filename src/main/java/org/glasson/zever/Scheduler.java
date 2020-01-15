@@ -9,7 +9,6 @@ public class Scheduler {
 		Output singleOutput;
 		while (true) {
 			singleOutput = new Output(Collector.collect());
-			
 			int hour = LocalTime.now().getHour();
 			if (hour >= 18) { // Sleep from 1800
 				o.
