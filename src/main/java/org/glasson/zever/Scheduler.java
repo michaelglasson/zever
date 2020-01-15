@@ -6,12 +6,23 @@ public class Scheduler {
 
 	public static void main(String[] args) throws InterruptedException {
 		Outputs o = new Outputs();
+		Output singleOutput;
 		while (true) {
+			singleOutput = new Output(Collector.collect());
+			
 			int hour = LocalTime.now().getHour();
-			if (hour > 18) // Sleep from 1800
-				Thread.sleep(14 * 60 * 60 * 1000 - 100); // Sleep until 0800
+			if (hour >= 18) { // Sleep from 1800
+				o.
+				
+				Thread.sleep(14 * 60 * 60 * 1000 - 1000); // Sleep until 0800
+			}
 			Thread.sleep(millisecondsToNextMinute());
+			
+			// If not end of day, just collect and update status
 			o.collect();
+			
+			
+			
 			if (LocalTime.now().getMinute() % 5 == 0)
 				o.postToPVOutput();
 		}

@@ -1,30 +1,36 @@
 package org.glasson.zever;
 
-import java.util.HashSet;
-import java.util.Map;
+import java.util.LinkedHashSet;
 import java.util.Set;
-import java.util.TreeMap;
 
 public class StatusSet {
-	Map<String, Set<Output>> statusSet = new TreeMap<>();
-	Set<Output> outputs = new HashSet<>();
-	private static String thisTimeWindow;
-	private static String newTimeWindow;
-	// Make the key like 0930
+	private static Set<Output> outputs = new LinkedHashSet<>();
+	private static String thisTimeWindow; // Multiples of 5 minutes like "09:40"
+	
 	public static boolean timeWindowHasPassed(String toCheck) {
 		toCheck = keyForTime(toCheck);
 		return !thisTimeWindow.equals(toCheck);
 	}
 	
-	public void addOutput(Output toAdd) {
-		newTimeWindow = keyForTime(toAdd.time);
-		if (!thisTimeWindow.equals(newTimeWindow)) {
+	public static void addOutput(Output toAdd) {
+		if (!thisTimeWindow.equals(keyForTime(toAdd.time))) {
 			outputs.clear();
+			thisTimeWindow = keyForTime(toAdd.time);
 		}
 		outputs.add(toAdd);
 	}
 	
-	public void addStatus(Output o) {
+	public static Output getSummaryForThisTimeWindow() {
+		Output out = new Output();
+		if (outputs.size() == 0) return out;
+		int p = 0;
+		for (Output o : outputs) {
+			p += Integer.parseInt(o.power);
+			out = o;
+		}
+		out.power = String.valueOf(p / outputs.size());
+		out.time = thisTimeWindow;
+		return out; 
 	}
 	
 	public static String keyForTime(String time) {
@@ -32,7 +38,7 @@ public class StatusSet {
 		int t = Integer.parseInt(time.substring(time.indexOf(":") + 1));
 		t = (t + 4) / 5 * 5;
 		String s = String.format("%02d", t);
-		return time.replaceAll(":\\d\\d", ":" + s);
+		return time.replaceFirst(":\\d\\d", ":" + s);
 	}
 }
 

@@ -1,9 +1,10 @@
 # Use this file to record all the parameters used by the ZeverInverterToPVOutput Java program.
 # This file should be placed in the same directory as the program's jar file.
 
-InverterURL=localhost:8500/home.cgi
+InverterURL=http://localhost:8500/home.cgi
 LocalCacheFileName=output
-PVOutput.URL=https://pvoutput.org/service/r2/addoutput.jsp
+PVOutput.OutputURL=https://pvoutput.org/service/r2/addoutput.jsp
+PVOutput.StatusURL=https://pvoutput.org/service/r2/addstatus.jsp
 PVOutput.SystemId=72696
 PVOutput.APIKey=a5d6b30a0b2ea5b10390dc5d0c73d52a4b0efb40
 

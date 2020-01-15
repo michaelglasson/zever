@@ -9,7 +9,6 @@ public class Output {
 	public String time;       // hh:mm time at which peak power was generated
 	public String power;           // power in watts
 	public String generated;      // energy generated so far today in watt hours
-	
 	public Output() {} // Default constructor to allow creation of blank Output.
 
 	/*
@@ -21,13 +20,13 @@ public class Output {
 	 */
 	public Output(String inverterResponse) {
 		String[] parts = inverterResponse.split("\n");
-		if (parts.length != 14) System.out.println("Inverter response did not have 14 lines. Actually had: " + parts.length);
+		if (parts.length != 14) System.err.println("Inverter response did not have 14 lines. Actually had: " + parts.length);
 		DateTimeFormatter zeverDateTime = DateTimeFormatter.ofPattern("HH:mm dd/MM/yyyy");
 		LocalDateTime d = LocalDateTime.now();
 		try {
 			d = LocalDateTime.parse(parts[6], zeverDateTime);
 		} catch (DateTimeParseException e) {
-			System.out.println("Could not parse time and date from inverter. Using current time and date. " + e.getMessage());
+			System.err.println("Could not parse time and date from inverter. Using current time and date. " + e.getMessage());
 		}
 		date = d.format(DateTimeFormatter.BASIC_ISO_DATE);
 		time = d.format(DateTimeFormatter.ofPattern("HH:mm"));

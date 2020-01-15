@@ -21,12 +21,6 @@ import org.apache.http.client.fluent.Request;
 public class Outputs {
 	public static Map<String, Output> outputs = new TreeMap<>();
 	private static final Properties props = new Properties();
-	private static final String inverterResponse = "1\n" + "1\n" + "EAB96173XXXXXXX\n" + "NXVWWXSRRT7XXXXXXX\n"
-			+ "M11\n" + "16B21-663R+16B21-XXXXXX\n" + "11:00 31/08/2018\n" + // will ignore this and just use current
-																				// time
-			"OK\n" + "1\n" + "SX000660117XXXXXXXXX\n" + "2300\n" + // Assume this is watt hours)
-			"2.9\n" + // This needs to become 2.02 apparently
-			"OK\n" + "Error\n";
 
 	public Outputs() {
 		try (InputStream input = new FileInputStream("properties.txt")) {
@@ -59,7 +53,9 @@ public class Outputs {
 		} catch (IOException e) {
 			System.out.println("Cannot read the output file. " + e.getMessage());
 		}
-		System.out.println("Inverter IP: " + props.getProperty("InverterURL"));
+		
+		
+		
 		updateOutputsWithInverterResponse(inverterResponse);
 	}
 
@@ -73,7 +69,7 @@ public class Outputs {
 				pw.println(outputs.get(s).toCSV());
 			}
 		} catch (FileNotFoundException e) {
-			System.out.println(e.getMessage());
+			System.err.println(e.getMessage());
 		}
 	}
 
@@ -102,8 +98,7 @@ public class Outputs {
 	 * PVOutput. The whole outputs file is overwritten with the current data from
 	 * the outputs map when save() is executed.
 	 */
-	private void updateOutputsWithInverterResponse(String inverterResponse) {
-		Output o = new Output(inverterResponse);
+	private void updateOutputsWithInverterResponse(Output o) {
 		if (outputs.containsKey(o.date)) {
 			if (Integer.parseInt(outputs.get(o.date).power) < Integer.parseInt(o.power)) {
 				outputs.put(o.date, o);
@@ -152,9 +147,9 @@ public class Outputs {
 			if (response.getStatusLine().getStatusCode() == 200)
 				return true;
 		} catch (ClientProtocolException e) {
-			System.out.println(e.getStackTrace());
+			System.err.println(e.getStackTrace());
 		} catch (IOException e) {
-			System.out.println(e.getStackTrace());
+			System.err.println(e.getStackTrace());
 		}
 		return false;
 	}

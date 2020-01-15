@@ -6,36 +6,11 @@
 	<artifactId>zever</artifactId>
 	<version>1</version>
 	<dependencies>
-		<dependency>
-			<groupId>org.apache.logging.log4j</groupId>
-			<artifactId>log4j-api</artifactId>
-			<version>2.13.0</version>
-		</dependency>
-
-		<dependency>
-			<groupId>org.apache.logging.log4j</groupId>
-			<artifactId>log4j-core</artifactId>
-			<version>2.13.0</version>
-		</dependency>
-
-		<!-- https://mvnrepository.com/artifact/org.apache.httpcomponents/httpclient -->
-		<dependency>
-			<groupId>org.apache.httpcomponents</groupId>
-			<artifactId>httpclient</artifactId>
-			<version>4.5.10</version>
-		</dependency>
 		<!-- https://mvnrepository.com/artifact/org.apache.httpcomponents/fluent-hc -->
 		<dependency>
 			<groupId>org.apache.httpcomponents</groupId>
 			<artifactId>fluent-hc</artifactId>
 			<version>4.5.10</version>
-		</dependency>
-		<!-- https://mvnrepository.com/artifact/com.sun.net.httpserver/http -->
-		<dependency>
-			<groupId>com.sun.net.httpserver</groupId>
-			<artifactId>http</artifactId>
-			<version>20070405</version>
-			<scope>test</scope>
 		</dependency>
 	</dependencies>
 	<build>
