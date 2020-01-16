@@ -5,6 +5,7 @@ import java.io.OutputStream;
 import java.net.InetSocketAddress;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Random;
 
 import com.sun.net.httpserver.HttpContext;
 import com.sun.net.httpserver.HttpExchange;
@@ -31,10 +32,22 @@ public class WebServer {
 		DateTimeFormatter zeverDateTime = DateTimeFormatter.ofPattern("HH:mm dd/MM/yyyy");
 		String dateTime = LocalDateTime.now().format(zeverDateTime) + "\n";
 		String middle = "8\n9\n10\n";
-		String power = "2000\n";
-		String energy = "2.2\n";
+		String power = getRandomPower();
+		String energy = getEnergy();
 		String end = "13\n14";
 		return (start + dateTime + middle + power + energy + end).getBytes();
+	}
+	
+	private static String getRandomPower() {
+		Random r = new Random();
+		int n = r.nextInt(1000) + 1000;
+		return String.valueOf(n) + "\n";
+	}
+	
+	private static String getEnergy() {
+		Random r = new Random();
+		int n = r.nextInt(500) + 500;
+		return String.valueOf(LocalDateTime.now().getHour() * n) + "\n";
 	}
 
 }

@@ -5,10 +5,10 @@ import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 
 public class Output {
-	public String date;           // yyyymmdd
-	public String time;       // hh:mm time at which peak power was generated
-	public String power;           // power in watts
-	public String generated;      // energy generated so far today in watt hours
+	public String date = "20000101";           // yyyymmdd
+	public String time = "00:00";       // hh:mm time at which peak power was generated
+	public String power = "0";           // power in watts
+	public String generated = "0";      // energy generated so far today in watt hours
 	public Output() {} // Default constructor to allow creation of blank Output.
 
 	/*
